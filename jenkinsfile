@@ -6,8 +6,8 @@ agent any
   environment {
     PROJ="liquibase-jenkins_testing"
     GITURL="https://github.com/mayank1dba"
-    ENVIRONMENT_STEP="Test"
-    BRANCH="main"
+    ENVIRONMENT_STEP="dev"
+    BRANCH="dev"
     PATH="/usr/apps/Liquibase-4.4.3-bin:$PATH"
   }
   stages {
@@ -32,7 +32,7 @@ agent any
           if [ -d "$PROJ" ]; then rm -Rf $PROJ; fi
           git clone ${GITURL}/${PROJ}.git
           cd ${PROJ}
-          git checkout $BRANCH
+          git checkout -b $BRANCH
           git status
           '''
       } // steps for checkout stages
@@ -42,7 +42,7 @@ agent any
     steps {
     sh '''
      { set +x; } 2>/dev/null
-     cd /root/liquibase_jenk_test1/${PROJ}/${ENVIRONMENT_STEP}
+     cd /var/lib/jenkins/workspace/${PROJ}/${ENVIRONMENT_STEP}
       liquibase --version
       echo "------------------------------------"
       echo "----------liquibase status----------"
