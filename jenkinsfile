@@ -9,8 +9,12 @@ agent any
     ENVIRONMENT_STEP="dev"
     BRANCH="dev"
     PATH="/usr/apps/Liquibase-4.4.3-bin:$PATH"
+    MysqlDB_CREDS=credentials('94a4216b-45f0-4ab6-b6e8-def33e6fde0a')
+    URL="jdbc:mysql://192.168.47.134:3306/db_liquib_test1?useLegacyDatetimeCode=false&serverTimezone=UTC" 
+    ChangeLogFile="changelog.mysql.sql"
+    DRIVER="com.mysql.cj.jdbc.Driver"
   }
-  stages {
+ stages {
 
     stage ('Precheck') {
               steps {
@@ -28,7 +32,7 @@ agent any
         // checkout Liquibase project from repo
         sh '''
           { set +x; } 2>/dev/null
-          cd /var/lib/jenkins/workspace
+          cd /var/lib/jenkins/workspace/${ENVIRONMENT_STEP}
           if [ -d "$PROJ" ]; then rm -Rf $PROJ; fi
           git clone ${GITURL}/${PROJ}.git
           cd ${PROJ}
@@ -42,20 +46,20 @@ agent any
     steps {
     sh '''
      { set +x; } 2>/dev/null
-     cd /var/lib/jenkins/workspace/${PROJ}/${ENVIRONMENT_STEP}
+     cd /var/lib/jenkins/workspace/${ENVIRONMENT_STEP}/${PROJ}
       liquibase --version
       echo "------------------------------------"
       echo "----------liquibase status----------"
       echo "------------------------------------"
-.     liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} status
+.     liquibase --url=${URL} --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} status
       echo "---------------------------------------"
       echo "----------liquibase updateSQL----------"
       echo "---------------------------------------"
-      liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} updateSQL
+      liquibase --url=${URL} --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} updateSQL
       echo "------------------------------------"
       echo "----------liquibase update----------"
       echo "------------------------------------"
-      liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} update
+      liquibase --url=${URL} --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} update
         '''
       } // steps
     }   // Liquibase commands stage
