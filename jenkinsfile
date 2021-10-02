@@ -28,7 +28,7 @@ agent any
         // checkout Liquibase project from repo
         sh '''
           { set +x; } 2>/dev/null
-          cd /root/liquibase_jenk_test_02oct21
+          cd /root/liquibase_jenk_test_02oct21/liquibase-jenkins_testing
           if [ -d "$PROJ" ]; then rm -Rf $PROJ; fi
           git clone ${GITURL}/${PROJ}.git
           cd ${PROJ}
