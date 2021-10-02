@@ -49,15 +49,15 @@ agent any
       echo "------------------------------------"
       echo "----------liquibase status----------"
       echo "------------------------------------"
-.     liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=com.mysql.jdbc.Driver status
+.     liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --driver=com.mysql.cj.jdbc.Driver status
       echo "---------------------------------------"
       echo "----------liquibase updateSQL----------"
       echo "---------------------------------------"
-      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=com.mysql.jdbc.Driver updateSQL
+      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --driver=com.mysql.cj.jdbc.Driver updateSQL
       echo "------------------------------------"
       echo "----------liquibase update----------"
       echo "------------------------------------"
-      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=com.mysql.jdbc.Driver update
+      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --driver=com.mysql.cj.jdbc.Driver update
         '''
       } // steps
     }   // Liquibase commands stage
@@ -67,7 +67,7 @@ agent any
              sh '''
                { set +x; } 2>/dev/null
                echo "Deleting project workspace..."
-               cd /localPath/to/workspaceFolder && rm -r ${PROJ}
+               cd /var/lib/jenkins/workspace/${ENVIRONMENT_STEP} && rm -r ${PROJ}
              '''
            } // steps
          }   // Deleting project workspace
