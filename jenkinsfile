@@ -6,8 +6,8 @@ agent any
   environment {
     PROJ="liquibase-jenkins_testing"
     GITURL="https://github.com/mayank1dba"
-    ENVIRONMENT_STEP="${params.step}"
-    BRANCH="${params.pipeline}"
+    ENVIRONMENT_STEP="Test"
+    BRANCH="Test"
     PATH="/usr/apps/Liquibase-4.4.3-bin:$PATH"
   }
   stages {
