@@ -51,15 +51,15 @@ agent any
       echo "------------------------------------"
       echo "----------liquibase status----------"
       echo "------------------------------------"
-.     liquibase --url=${URL} --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} status
+.     liquibase --url=jdbc:mysql://192.168.47.134:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} status
       echo "---------------------------------------"
       echo "----------liquibase updateSQL----------"
       echo "---------------------------------------"
-      liquibase --url=${URL} --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} updateSQL
+      liquibase --url=jdbc:mysql://192.168.47.134:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} updateSQL
       echo "------------------------------------"
       echo "----------liquibase update----------"
       echo "------------------------------------"
-      liquibase --url=${URL} --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} update
+      liquibase --url=jdbc:mysql://192.168.47.134:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=${ChangeLogFile} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} update
         '''
       } // steps
     }   // Liquibase commands stage
