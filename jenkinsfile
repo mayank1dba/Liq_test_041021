@@ -1,0 +1,74 @@
+#!/usr/bin/env groovy
+// Liquibase declarative pipeline
+
+pipeline {
+agent any
+  environment {
+    PROJ="liquibase-jenkins_testing"
+    GITURL="https://github.com/mayank1dba"
+    ENVIRONMENT_STEP="${params.step}"
+    BRANCH="${params.pipeline}"
+##  PATH="/path/to/liquibase:$PATH"
+	PATH="/usr/apps/Liquibase-4.4.3-bin:$PATH"
+  }
+  stages {
+
+    stage ('Precheck') {
+              steps {
+                      sh '''
+        { set +x; } 2>/dev/null
+        echo "Current project: "$PROJ
+        echo "Current scm branch: "$BRANCH
+        echo "Current environment: "$ENVIRONMENT_STEP
+                      '''
+              } // steps
+      } // stage 'precheck'
+
+    stage ('Checkout') {
+      steps {
+        // checkout Liquibase project from repo
+        sh '''
+          { set +x; } 2>/dev/null
+          cd /root/liquibase_jenk_test1
+          if [ -d "$PROJ" ]; then rm -Rf $PROJ; fi
+          git clone ${GITURL}/${PROJ}.git
+          cd ${PROJ}
+          git checkout $BRANCH
+          git status
+          '''
+      } // steps for checkout stages
+    } // stage 'checkout'
+
+   stage ('liquibase commands'){
+    steps {
+    sh '''
+     { set +x; } 2>/dev/null
+     cd /root/liquibase_jenk_test1/${PROJ}/${ENVIRONMENT_STEP}
+      liquibase --version
+      echo "------------------------------------"
+      echo "----------liquibase status----------"
+      echo "------------------------------------"
+.     liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} status
+      echo "---------------------------------------"
+      echo "----------liquibase updateSQL----------"
+      echo "---------------------------------------"
+      liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} updateSQL
+      echo "------------------------------------"
+      echo "----------liquibase update----------"
+      echo "------------------------------------"
+      liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} --contexts=${ENVIRONMENT_STEP} --driver=${DRIVER} update
+        '''
+      } // steps
+    }   // Liquibase commands stage
+
+        stage ('Cleanup'){
+           steps {
+             sh '''
+               { set +x; } 2>/dev/null
+               echo "Deleting project workspace..."
+               cd /localPath/to/workspaceFolder && rm -r ${PROJ}
+             '''
+           } // steps
+         }   // Deleting project workspace
+  } // stages
+ }  // pipeline
