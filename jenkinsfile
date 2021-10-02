@@ -10,7 +10,6 @@ agent any
     BRANCH="dev"
     PATH="/usr/apps/Liquibase-4.4.3-bin:$PATH"
     MysqlDB_CREDS=credentials('94a4216b-45f0-4ab6-b6e8-def33e6fde0a')
-    URL="jdbc:mysql://192.168.47.134:3306/db_liquib_test1" 
     ChangeLogFile="changelog.mysql.sql"
     DRIVER="com.mysql.cj.jdbc.Driver"
   }
