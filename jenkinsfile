@@ -48,15 +48,18 @@ agent any
       echo "------------------------------------"
       echo "----------liquibase status----------"
       echo "------------------------------------"
-.     liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=changelog.mysql.sql --driver=com.mysql.cj.jdbc.Driver status
+.     liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=changelog.mysql.sql --classpath=/usr/share/java/mysql-connector-java.jar
+ --driver=com.mysql.cj.jdbc.Driver status
       echo "---------------------------------------"
       echo "----------liquibase updateSQL----------"
       echo "---------------------------------------"
-      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=changelog.mysql.sql --driver=com.mysql.cj.jdbc.Driver updateSQL
+      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=changelog.mysql.sql --classpath=/usr/share/java/mysql-connector-java.jar
+ --driver=com.mysql.cj.jdbc.Driver updateSQL
       echo "------------------------------------"
       echo "----------liquibase update----------"
       echo "------------------------------------"
-      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=changelog.mysql.sql --driver=com.mysql.cj.jdbc.Driver update
+      liquibase --url=jdbc:mysql://192.168.47.135:3306/db_liquib_test1 --username=${MysqlDB_CREDS_USR} --password=${MysqlDB_CREDS_PSW} --changeLogFile=changelog.mysql.sql --classpath=/usr/share/java/mysql-connector-java.jar
+ --driver=com.mysql.cj.jdbc.Driver update
         '''
       } // steps
     }   // Liquibase commands stage
