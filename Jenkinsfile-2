@@ -28,7 +28,7 @@ agent any
       steps {
         // checkout Liquibase project from the git repository
         sh '''
-          cd /usr/apps/Liquibase-4.4.3-bin/examples/${WORKSPACEFOLDER}
+          cd /usr/apps/Liquibase-4.4.3-bin/examples/${WORKSPACEFOLDER}/${ENVIRONMENT_STEP}
           if [ -d "$PROJ" ]; then rm -Rf $PROJ; fi
           git clone ${GITURL}/${PROJ}.git
           cd ${PROJ}
